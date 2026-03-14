@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  taskservice:
+    build: .
+    container_name: taskservice
+    ports:
+      - "5000:80"
+    restart: always 

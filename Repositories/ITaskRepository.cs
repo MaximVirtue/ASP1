@@ -1,0 +1,12 @@
+using TaskTracker.Models;
+
+namespace TaskTracker.Repositories
+{
+    public interface ITaskRepository
+    {
+        IEnumerable<BaseTask> GetAll();
+        BaseTask? GetById(Guid id);
+        void Add(BaseTask task);
+        void Update(BaseTask task);
+    }
+}
