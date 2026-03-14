@@ -1,18 +1,4 @@
-If we introduce a NotificationService that sends emails when a task is completed,
-an asynchronous integration pattern would be preferable.
-
-Using asynchronous messaging (for example RabbitMQ or Kafka) allows the Task
-Service to publish an event (TaskCompleted) without waiting for the notification
-service to process it.
-
-Advantages:
-- Loose coupling between services
-- Better scalability
-- Fault tolerance (messages can be retried)
-- The Task Service remains fast and responsive
-
-The Task Service would publish an event to a message broker (e.g., RabbitMQ),
-and the NotificationService would subscribe to this event and send an email.
-
-Using synchronous communication (HTTP/REST) would tightly couple the services
-and could slow down the Task Service if the notification system is slow or unavailable.
+If we add a NotificationService in the future that sends an email when a task is completed, it would be better to use an asynchronous integration pattern
+With asynchronous communication, the Task Service can publish an event, for example TaskCompleted, to a message broker such as RabbitMQ or Kafka. The NotificationService can subscribe to this event and send an email when it receives the message
+This approach has several advantages. First, it keeps the services loosely coupled, meaning the Task Service does not depend directly on the NotificationService. Second, it improves scalability because each service can work independently. It also increases reliability since messages can be retried if something goes wrong. Finally, the Task Service remains fast and responsive because it does not need to wait for the email to be sent.
+If synchronous communication such as HTTP/REST was used instead, the Task Service would have to wait for the NotificationService to process the request. This could slow down the system and create problems if the notification service is unavailable or responding slowly
